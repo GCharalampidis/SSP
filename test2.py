@@ -44,12 +44,12 @@ df['avg'] = df.Name.apply(lambda name: df[df.Name == name].SpokenFor.mean()) #cr
 df['is_imposter'] = df.Name.apply(lambda name: name in imposters[game - 1]) #create and populate column with imposter boolean value
 df.drop_duplicates(subset=['Name'], inplace=True)
 
-imposters_df = df[df.is_imposter == True]
-crew_df = df[df.is_imposter == False]
+imposters_df = df[df.is_imposter == True] #data frame with just the imposters of the game
+crew_df = df[df.is_imposter == False] #data frame with just the crewmates of the game
 totalmean = df.SpokenFor.mean() #the average of the mean % speaking time of each player in the game
 
-for index, row in imposters_df.iterrows():
-    df3 = row['avg'] - crew_df['avg']
+for index, row in imposters_df.iterrows(): 
+    df3 = row['avg'] - crew_df['avg'] #difference between the imposter's % speaking and each crewmate's % speaking
     print(df3)
 
 fig = go.Figure(data=[
