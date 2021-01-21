@@ -6,7 +6,7 @@ import re
 import plotly.graph_objects as go
 
 game = 4
-load = False
+load = True
 rootdir = f'AmongUsGames/Game {game}'
 T = [] 
 imposters = [["Khalid", "Hakan"], ["Tim", "Abri"], ["Tim", "Gianni"], ["Hakan", "Gianni"], ["Gianni", "Bilal"], ["Hakan", "Abri"], ["Khalid", "Gianni"], ["Gianni", "Bilal"]]
@@ -49,8 +49,12 @@ crew_df = df[df.is_imposter == False] #data frame with just the crewmates of the
 totalmean = df.SpokenFor.mean() #the average of the mean % speaking time of each player in the game
 
 for index, row in imposters_df.iterrows(): 
-    df3 = row['avg'] - crew_df['avg'] #difference between the imposter's % speaking and each crewmate's % speaking
+    print(row['Name'])
+    df3 = pd.DataFrame(columns=['Name', 'Difference'])
+    df3['Difference'] = row['avg'] - crew_df['avg'] #difference between the imposter's % speaking and each crewmate's % speaking
+    df3['Name'] = crew_df['Name']
     print(df3)
+    print()
 
 fig = go.Figure(data=[
     go.Bar(name='Crew', x=crew_df['Name'], y=crew_df['avg']),
@@ -64,11 +68,3 @@ fig.update_layout(
 )
     
 fig.show()
-
-
-print(f"""
-Game: {game}
-=======
-Mean: {totalmean:0.4f}
-"""
-)
